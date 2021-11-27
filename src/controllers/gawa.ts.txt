@@ -1,0 +1,72 @@
+// kaparehas lang to ni RequestHandler
+// import { Request, Response, NextFunction } from 'express';
+
+import { RequestHandler } from 'express';
+import { Todo } from '../models/todos';
+
+const TODOS: Todo[] = [];
+
+// POST ---------------------------------------------
+export const createTodo: RequestHandler = (req, res, next) => {
+  // puro any kasi naka defined dito kapag tutok mo si mouse
+  // const text = req.body.text;
+
+  // ok to para maging string talaga
+  const text = (req.body as { text: string }).text;
+  const newTodo = new Todo(Math.random().toString(), text);
+
+  TODOS.push(newTodo);
+
+  res.status(201).json({
+    message: 'Created the todo.',
+    createdTodo: newTodo,
+  });
+
+  //  note mag post ka muna para magkaron lang ang si TODOS[];
+};
+
+// GET ---------------------------------------------
+export const getTodo: RequestHandler = (req, res, next) => {
+  res.json({ todos: TODOS });
+};
+
+// PATCH ---------------------------------------------
+export const updateTodo: RequestHandler<{ id: string }> = (req, res, next) => {
+  // any kasi naging type nito kaya dapat may
+  // lagay ng <{id: string}> sa tabi RequestHandler
+  // const todoId = req.params.id;
+
+  const todoId = req.params.id; // so ngayon string na ang type nito
+
+  const updateText = (req.body as { text: string }).text;
+
+  const todoIndex = TODOS.findIndex((todo) => todo.id === todoId);
+
+  if (todoIndex < 0) {
+    throw new Error('Could not find todo!');
+  }
+
+  TODOS[todoIndex] = new Todo(TODOS[todoIndex].id, updateText);
+
+  res.json({ message: 'Updated!', updateTodo: TODOS[todoIndex] });
+};
+
+// DELETE ---------------------------------------------
+export const deleteTodo: RequestHandler = (req, res, next) => {
+  const todoId = req.params.id;
+
+  const todoIndex = TODOS.findIndex((todo) => todo.id === todoId);
+
+  if (todoIndex < 0) {
+    throw new Error('Could not find todo!');
+  }
+
+  TODOS.splice(todoIndex, 1);
+
+  res.json({ message: 'Todo Deleted!' });
+};
+
+// SAMPLE NI LANDO ---------------------------------------------
+export const ViewTodo: RequestHandler = (req, res, next) => {
+  res.json({ todos: TODOS });
+};

@@ -1,0 +1,39 @@
+POST http://192.168.0.100:7000/todos 
+Content-Type: application/json
+
+{
+	"text": "Finished the course!"
+}
+###
+
+GET http://192.168.0.100:7000/todos
+
+###
+
+PATCH http://192.168.0.100:7000/todos/0.014956350794899986
+Content-Type: application/json
+
+{
+	"text": "Finish course ni rolly!"
+}
+
+###
+
+
+DELETE http://192.168.0.100:7000/todos/cleartodo
+# Content-Type: application/json
+
+# {
+# 	"text": "Clear!"
+# }
+
+###
+
+DELETE http://192.168.0.100:7000/todos/0.8276180803245023
+Content-Type: application/json
+
+{
+	"text": "Finish course ni rolly!"
+}
+
+###

@@ -1,0 +1,93 @@
+// kaparehas lang to ni RequestHandler
+// import { Request, Response, NextFunction } from 'express';
+
+import { RequestHandler } from 'express';
+import { Todo } from '../models/todos';
+import { text } from 'body-parser';
+import { resolve } from 'dns';
+
+let TODOS: Todo[] = [];
+
+// POST ---------------------------------------------
+export const createTodo: RequestHandler = (req, res, next) => {
+	const todoText = (req.body as { text: string }).text;
+	const todoUpdate = new Todo(Math.random().toString(), todoText);
+
+	TODOS.push(todoUpdate);
+
+	res.status(201).json({
+		message: 'Created',
+		Todo: todoUpdate
+	});
+};
+
+// GET ---------------------------------------------
+export const getTodo: RequestHandler = (req, res, next) => {
+	res.status(201).json({
+		// message: 'All records',
+		// Todo: TODOS
+		TODOS
+	});
+};
+
+// PATCH ---------------------------------------------
+export const updateTodo: RequestHandler<{ id: string }> = (req, res, next) => {
+	const todoIndex = req.params.id;
+	const todoText = (req.body as { text: string }).text;
+	const todoUpdate = TODOS.findIndex((t) => t.id === todoIndex);
+
+	if (todoUpdate < 0) {
+		throw new Error('Updated');
+	}
+
+	TODOS[todoUpdate] = new Todo(TODOS[todoUpdate].id, todoText);
+
+	res.status(201).json({
+		message: 'Updated',
+		Todo: TODOS[todoUpdate]
+	});
+};
+
+// DELETE ---------------------------------------------
+export const deleteTodo: RequestHandler = (req, res, next) => {
+	const todoIndex = req.params.id;
+	const todoUpdate = TODOS.findIndex((t) => t.id === todoIndex);
+
+	if (todoUpdate < 0) {
+		throw new Error('Na removed na');
+	}
+
+	TODOS.splice(todoUpdate, 1);
+
+	res.status(201).json({
+		message: 'Deleted',
+		Todo: TODOS[todoUpdate]
+	});
+};
+
+// DELETE ALL ---------------------------------------------
+export const clearTodo: RequestHandler = (req, res, next) => {
+	// delay();
+	TODOS.length = 0;
+	res.status(201).json({
+		message: 'All records',
+		Todo: TODOS
+	});
+};
+
+// function deleteClear(): Promise<number> {
+// 	return new Promise((resolve) => {
+// 		TODOS.length = 0;
+// 		resolve(123);
+// 		return 1;
+// 	});
+// }
+
+// async function delay(): Promise<void> {
+// 	await deleteClear();
+// }
+
+// SAMPLE NI LANDO ---------------------------------------------
+export const ViewTodo: RequestHandler = (req, res, next) => {
+	res.json({ todos: TODOS });
+};

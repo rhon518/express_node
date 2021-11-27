@@ -1,0 +1,14 @@
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pogi": "nodemon dist/app.js"
+  },
+
+C:\roland\dont_delete_notes\TYPESCRIPT\express_node_proj1> npm run pogi
+
+
+use this to test the api call
+
+sample.http
+
+
+
