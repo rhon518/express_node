@@ -40,6 +40,7 @@ export const getTodo: RequestHandler = (req, res, next) => {
 
 	TODOS.forEach(element => {
 		console.log(`GET = TODOS: ${element.id}`)
+		console.log('test sre5')
 	});
 };
 // PATCH --------------------------------------------
