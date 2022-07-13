@@ -29,7 +29,11 @@ export const createTodo: RequestHandler = (req, res, next) => {
 		Todo: todoUpdate
 	});
 
+<<<<<<< HEAD
 	console.log('test sre2')
+=======
+  console.log('test sre1')
+>>>>>>> main
 	console.log(`POST = todoText: ${todoText}, todoUpdate: ${todoUpdate.id}  ${todoUpdate.text}`)
 };
 // GET ----------------------------------------------
