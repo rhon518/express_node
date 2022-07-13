@@ -33,6 +33,7 @@ export const createTodo: RequestHandler = (req, res, next) => {
 	console.log(`POST = todoText: ${todoText}, todoUpdate: ${todoUpdate.id}  ${todoUpdate.text}`)
 	console.log('test sre4')
 	console.log('test sre6')
+	console.log('test sre7')
 
 };
 // GET ----------------------------------------------
